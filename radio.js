@@ -15,9 +15,7 @@
     const tipid = 'radio-text';//提示框id
     const wintip = `<div id="radio-wrapper"
 	style="position: fixed;right: 10px;top: 50px;background: #eee;
-		width: 50px;height: 50px;z-index:99999;border:1px solid #999;
-	"
->
+		width: 50px;height: 50px;z-index:99999;border:1px solid #999;">
 	<p class="btn-ctrl" style="background: greenyellow;">play</p>
 	<p id="radio-text"></p>
 	<audio id="radio-player" src="" preload="auto" ></audio>
@@ -38,13 +36,16 @@
     const audio = document.getElementById('radio-player');
     const btn = wrapper.querySelector(".btn-ctrl");
     audio.src = srcArr[0];
+    //如官方链接报错，直接移除到下一个资源。
+    //[1]为三方备用资源，有延时
+    //支持edge,chrome,firefox
     audio.addEventListener('error', function (e) {
         audio.src = srcArr.shift();
         if (isOn) {
             audio.play()
         }
-
     });
+	
     btn.addEventListener('click', function () {
         isOn = true;
         if (audio.paused === true) {
